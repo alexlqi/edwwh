@@ -13,6 +13,9 @@ const createCredentials = async (req, res) => {
         // Generar usuario único de 8 caracteres facil de leer solo alfanumérico
         const user = uuidv4().slice(-8).replace(/-/g, '');
 
+        // generar un verify token usando nombre_clave_webhook como semilla
+        const verifyToken = bcrypt.hashSync(nombre_clave_webhook, 10);
+
         // genera una contraseña segura facil de leer
         const plainPassword = Math.random().toString(36).slice(-10);
 
@@ -22,6 +25,7 @@ const createCredentials = async (req, res) => {
         // Guardar en la colección de usuarios
         const newUser = new User({
             nombre_clave_webhook,
+            verifyToken,
             user,
             pass: hashedPassword
         });
