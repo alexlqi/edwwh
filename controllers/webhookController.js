@@ -57,7 +57,34 @@ const receiveWebhook = async (req, res) => {
     }
 };
 
+const enrolarMetaWebhook = async (req, res) => {
+    const { nombre_clave_webhook } = req.params;
+    const { user } = req.query;
+
+    try {
+        // buscar el verify token del usuario del nombre_clave_webhook en users  
+        const usuario = await User.findOne({ nombre_clave_webhook, user });
+
+        if (!usuario) {
+            return res.status(401).json({ message: 'Usuario no encontrado' });
+        }
+
+        if (
+            req.query['hub.mode'] == 'subscribe' &&
+            req.query['hub.verify_token'] == usuario.verifyToken
+        ) {
+            res.send(req.query['hub.challenge']);
+        } else {
+            res.sendStatus(400);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error de Enrollado' });
+    }
+};
+
 module.exports = {
     authenticate,
-    receiveWebhook
+    receiveWebhook,
+    enrolarMetaWebhook
 };

@@ -52,15 +52,6 @@ const webhookController = require('../controllers/webhookController');
  */
 router.post('/:nombre_clave_webhook', webhookController.authenticate, webhookController.receiveWebhook);
 
-router.get('/:nombre_clave_webhook', webhookController.authenticate, (req, res) => {
-    if (
-        req.query['hub.mode'] == 'subscribe' &&
-        req.query['hub.verify_token'] == 'token'
-      ) {
-        res.send(req.query['hub.challenge']);
-      } else {
-        res.sendStatus(400);
-      }
-});
+router.get('/:nombre_clave_webhook', webhookController.authenticate, webhookController.enrolarMetaWebhook);
 
 module.exports = router;
