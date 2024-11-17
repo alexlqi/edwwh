@@ -52,7 +52,7 @@ const webhookController = require('../controllers/webhookController');
  */
 router.post('/:nombre_clave_webhook', webhookController.authenticate, webhookController.receiveWebhook);
 
-router.get('/:nombre_clave_webhook', webhookController.authenticate, (req, res) => {
+router.get('/', webhookController.authenticate, (req, res) => {
     if (
         req.query['hub.mode'] == 'subscribe' &&
         req.query['hub.verify_token'] == 'token'
