@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const url = process.env.SWAGGER_URI || 'http://localhost:3000';
 
 const options = {
     definition: {
@@ -16,7 +16,7 @@ const options = {
         },
         servers: [
             {
-                url: `http://localhost:${port}`, // Cambia esto según tu configuración
+                url,
             },
         ],
         components: {
