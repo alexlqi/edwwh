@@ -1,5 +1,10 @@
 // swagger/swagger.js
 const swaggerJSDoc = require('swagger-jsdoc');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const port = process.env.PORT || 3000;
 
 const options = {
     definition: {
@@ -11,7 +16,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000', // Cambia esto según tu configuración
+                url: `http://localhost:${port}`, // Cambia esto según tu configuración
             },
         ],
         components: {
@@ -29,7 +34,7 @@ const options = {
         ],
     },
     // Ruta a los archivos donde se encuentran las anotaciones
-    apis: ['./server.js'],
+    apis: ['./routes/*.js'], // Asegúrate de que las rutas sean correctas
 };
 
 const swaggerSpec = swaggerJSDoc(options);

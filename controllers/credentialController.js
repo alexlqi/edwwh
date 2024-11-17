@@ -10,11 +10,13 @@ const createCredentials = async (req, res) => {
     const { nombre_clave_webhook } = req.params;
 
     try {
-        // Generar usuario único
-        const user = uuidv4();
+        // Generar usuario único de 8 caracteres facil de leer solo alfanumérico
+        const user = uuidv4().slice(-8).replace(/-/g, '');
 
-        // Generar contraseña segura
-        const plainPassword = uuidv4();
+        // genera una contraseña segura facil de leer
+        const plainPassword = Math.random().toString(36).slice(-10);
+
+        // hashear contraseña segura
         const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
         // Guardar en la colección de usuarios
