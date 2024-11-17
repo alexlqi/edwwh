@@ -13,7 +13,7 @@ const webhookController = require('../controllers/webhookController');
 /**
  * @swagger
  * /webhook/{nombre_clave_webhook}:
- *   get:
+ *   post:
  *     summary: Recibir un webhook
  *     tags: [Webhooks]
  *     parameters:
@@ -50,6 +50,6 @@ const webhookController = require('../controllers/webhookController');
  *       500:
  *         description: Error al almacenar el webhook
  */
-router.get('/:nombre_clave_webhook', webhookController.authenticate, webhookController.receiveWebhook);
+router.post('/:nombre_clave_webhook', webhookController.authenticate, webhookController.receiveWebhook);
 
 module.exports = router;
