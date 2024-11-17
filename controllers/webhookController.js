@@ -47,7 +47,7 @@ const receiveWebhook = async (req, res) => {
         const WebhookModel = createWebhookModel(nombre_clave_webhook);
 
         // Guardar el payload
-        const webhookEntry = new WebhookModel(payload);
+        const webhookEntry = new WebhookModel({payload: payload});
         await webhookEntry.save();
 
         res.status(200).json({ message: 'Webhook recibido y almacenado' });
