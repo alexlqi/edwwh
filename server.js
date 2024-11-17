@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger/swagger');
 const basicAuth = require('express-basic-auth');
+const cors = require('cors');
 
 // Rutas
 const credentialRoutes = require('./routes/credentialRoutes');
@@ -13,6 +14,13 @@ const webhookRoutes = require('./routes/webhookRoutes');
 dotenv.config();
 
 const app = express();
+
+// Middleware para habilitar CORS
+app.use(cors({
+    origin: '*', // Cambia esto por el dominio permitido
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+}));
 
 // Middleware para parsear JSON
 app.use(express.json());
