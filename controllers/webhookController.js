@@ -8,8 +8,16 @@ const createWebhookModel = require('../models/Webhook');
  */
 const authenticate = async (req, res, next) => {
     const { nombre_clave_webhook } = req.params;
-    const { user, pass } = req.query;
+    const { credentials } = req.query;
+    let user, pass;
 
+    if (credentials) {
+        [user, pass] = Buffer.from(credentials, 'base64').toString('utf-8').split(':');
+    }else{
+        user = req.query.user;
+        pass = req.query.pass;
+    }
+    
     if (!user || !pass) {
         return res.status(401).json({ message: 'Credenciales faltantes' });
     }
